@@ -13,6 +13,9 @@ interface NoteDao {
     @Query("SELECT * FROM Note")
     fun getAllNotes() : Flow<List<Note>>
 
+    @Query("SELECT * FROM NOTE where note_id = :id")
+    suspend fun getNoteById(id: Int) : Note?
+
     /**
      * This method will perform either insert or update operation
      * INSERT - If note has a unique id.
