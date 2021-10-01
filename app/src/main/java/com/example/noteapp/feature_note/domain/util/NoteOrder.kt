@@ -17,4 +17,15 @@ sealed class Sort(val order: Order) {
     class Date(order: Order) : Sort(order)
     class Title(order: Order) : Sort(order)
     class Color(order: Order) : Sort(order)
+
+    /**
+     * Update the order type of current sort.
+     */
+    fun updateOrder(order: Order) : Sort {
+       return when(this) {
+            is Date -> Date(order)
+            is Title -> Title(order)
+            is Color -> Color(order)
+        }
+    }
 }

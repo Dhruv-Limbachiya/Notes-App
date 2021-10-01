@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Note App</string>
+    <string name="text_heading">Your Notes</string>
+    <string name="text_title">Title</string>
+    <string name="text_date">Date</string>
+    <string name="text_color">Color</string>
+    <string name="text_ascending">Ascending</string>
+    <string name="text_descending">Descending</string>
 </resources>

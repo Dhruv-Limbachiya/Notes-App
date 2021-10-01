@@ -6,6 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.noteapp.feature_note.domain.model.Note
 import com.example.noteapp.feature_note.domain.use_cases.UseCases
+import com.example.noteapp.feature_note.domain.util.Order
+import com.example.noteapp.feature_note.domain.util.Sort
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +24,12 @@ class NotesViewModel @Inject constructor(
 
     var deletedNote: Note? = null
 
+    private var job: Job? = null
+
+    init {
+        getNotes(Sort.Date(Order.DescendingOrder))
+    }
+
     fun onEvent(event: NoteListEvent) {
         when (event) {
             is NoteListEvent.SortList -> {
@@ -32,13 +42,7 @@ class NotesViewModel @Inject constructor(
                     return
                 }
 
-                usecase.getNotes(event.sort).onEach { notes ->
-                    // update note list and its order in note state value.
-                    _noteState.value.copy(
-                        notes = notes,
-                        sort = event.sort
-                    )
-                }
+                getNotes(event.sort)
             }
 
             is NoteListEvent.DeleteNote -> {
@@ -62,5 +66,19 @@ class NotesViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    /**
+     * Get notes from the db by invoking "getNotes(sort)" use-case.
+     */
+    private fun getNotes(sort: Sort) {
+        job?.cancel()
+        job = usecase.getNotes(sort).onEach { notes ->
+            // update note list and its order in note state value.
+            _noteState.value = _noteState.value.copy(
+                notes = notes,
+                sort = sort
+            )
+        }.launchIn(viewModelScope)
     }
 }
