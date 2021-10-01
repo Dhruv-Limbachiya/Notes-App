@@ -3,6 +3,9 @@ package com.example.noteapp.di
 import android.content.Context
 import androidx.room.Room
 import com.example.noteapp.feature_note.data.data_source.NoteDatabase
+import com.example.noteapp.feature_note.data.repository.NoteRepositoryImpl
+import com.example.noteapp.feature_note.domain.repository.NoteRepository
+import com.example.noteapp.feature_note.domain.use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +30,27 @@ object AppModule {
         NoteDatabase.DATABASE_NAME
     ).build()
 
+    /**
+     * Provide NoteRepository. It will provide implementation of NoteRepositoryImpl.
+     */
+    @Singleton
+    @Provides
+    fun provideNoteRepository(noteDatabase: NoteDatabase) : NoteRepository {
+        return NoteRepositoryImpl(noteDatabase.noteDao)
+    }
+
+
+    /**
+     * Provides UseCases dependency/instance.
+     */
+    @Singleton
+    @Provides
+    fun provideUseCases(noteRepository: NoteRepository) : UseCases {
+        return UseCases(
+            addNote = AddNote(noteRepository),
+            deleteNote = DeleteNote(noteRepository),
+            getNotes = GetNotes(noteRepository),
+            getSpecificNote = GetSpecificNote(noteRepository)
+        )
+    }
 }
