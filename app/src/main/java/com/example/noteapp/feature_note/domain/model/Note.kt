@@ -14,5 +14,6 @@ data class Note(
     val noteId : Long? = null,
     var title: String,
     var content: String,
-    var color: Int
+    var color: Int,
+    var timeStamp: Long
 )
