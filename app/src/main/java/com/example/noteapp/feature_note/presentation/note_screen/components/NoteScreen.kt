@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
@@ -75,7 +76,7 @@ fun NoteScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 viewModel.onEvent(NoteEvent.SaveNote)
-            }) {
+            }, backgroundColor = MaterialTheme.colors.primary) {
                 Icon(
                     imageVector = Icons.Default.Save,
                     contentDescription = "Save note",
@@ -90,16 +91,21 @@ fun NoteScreen(
             modifier = Modifier.padding(16.dp)
         ) {
 
-            ColorBubbles(noteColor = noteColor) { color ->
-                coroutineScope.launch {
-                    backgroundColor.animateTo(
-                        targetValue = color,
-                        animationSpec = tween(
-                            durationMillis = 500
+            Row {
+                ColorBubbles(noteColor = viewModel.noteColor.value) { color ->
+                    coroutineScope.launch {
+                        backgroundColor.animateTo(
+                            targetValue = color,
+                            animationSpec = tween(
+                                durationMillis = 500
+                            )
                         )
-                    )
+                    }
+
+                    viewModel.onEvent(NoteEvent.ChangeColor(color.toArgb()))
                 }
             }
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -107,6 +113,7 @@ fun NoteScreen(
             NoteTextField(
                 text = noteTitle.text,
                 hint = noteTitle.hint,
+                isHintVisible = noteTitle.isHintVisible,
                 textStyle = MaterialTheme.typography.h5,
                 isSingleLine = true,
                 onValueChange = { text ->
@@ -124,6 +131,7 @@ fun NoteScreen(
             NoteTextField(
                 text = noteContent.text,
                 hint = noteContent.hint,
+                isHintVisible = noteContent.isHintVisible,
                 textStyle = MaterialTheme.typography.body1,
                 isSingleLine = false,
                 onValueChange = { text ->
@@ -153,9 +161,14 @@ fun ColorBubbles(
     Note.noteColors.forEach { color ->
         Box(
             modifier = modifier
-                .padding(horizontal = 8.dp)
+                .padding(8.dp)
                 .size(50.dp)
+                .shadow(15.dp, CircleShape)
                 .clip(CircleShape)
+                .background(
+                    color = color,
+                    shape = CircleShape
+                )
                 .border(
                     width = 2.dp,
                     color = if (noteColor == color.toArgb()) {
@@ -163,10 +176,6 @@ fun ColorBubbles(
                     } else {
                         Color.Transparent
                     },
-                    shape = CircleShape
-                )
-                .background(
-                    color = color,
                     shape = CircleShape
                 )
                 .clickable {
