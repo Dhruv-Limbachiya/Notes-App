@@ -29,6 +29,9 @@ import com.example.noteapp.feature_note.presentation.note_screen.components.Note
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+/**
+ * Screen for creating new note or updating existing note.
+ */
 @Composable
 fun NoteScreen(
     navController: NavController,

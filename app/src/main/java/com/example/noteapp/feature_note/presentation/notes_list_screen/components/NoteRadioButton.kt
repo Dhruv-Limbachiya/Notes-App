@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RadioButton(
+fun NoteRadioButton(
     modifier: Modifier = Modifier,
     text: String,
     isSelected: Boolean,
@@ -25,12 +25,10 @@ fun RadioButton(
     ) {
         RadioButton(
             selected = isSelected,
-            onClick = {
-                onSelected()
-            },
+            onClick = onSelected ,
             colors = RadioButtonDefaults.colors(
-                selectedColor = MaterialTheme.colors.onBackground, // White.
-                unselectedColor = MaterialTheme.colors.background // Dark Gray.
+                selectedColor = MaterialTheme.colors.primary, // White.
+                unselectedColor = MaterialTheme.colors.onBackground // Dark Gray.
             )
         )
         

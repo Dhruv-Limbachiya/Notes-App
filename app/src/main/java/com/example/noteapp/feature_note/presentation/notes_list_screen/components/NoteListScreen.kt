@@ -22,6 +22,7 @@ import com.example.noteapp.feature_note.domain.util.Order
 import com.example.noteapp.feature_note.domain.util.Sort
 import com.example.noteapp.feature_note.presentation.notes_list_screen.NoteListEvent
 import com.example.noteapp.feature_note.presentation.notes_list_screen.NotesViewModel
+import com.example.noteapp.feature_note.presentation.util.Screen
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
@@ -37,7 +38,9 @@ fun NoteListScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {},
+                onClick = {
+                    navController.navigate(Screen.ADD_EDIT_NOTE_SCREEN)
+                },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add note")
@@ -56,7 +59,7 @@ fun NoteListScreen(
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
-                SortSection(modifier = Modifier.fillMaxWidth())
+                SortSection(modifier = Modifier.fillMaxWidth(),sort = noteState.sort)
             }
 
             // List (Notes)
@@ -66,12 +69,15 @@ fun NoteListScreen(
                     .padding(16.dp)
             ) {
                 items(noteState.notes) { note ->
+                    Spacer(modifier = Modifier.height(16.dp))
+
                     NoteItem(
                         note = note,
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                // Todo : Navigate to note screen.
+                                // Navigate to note screen.
+                                navController.navigate(Screen.ADD_EDIT_NOTE_SCREEN + "?noteId=${note.noteId}&noteColor=${note.color}")
                             }
                     ) {
                         viewModel.onEvent(NoteListEvent.DeleteNote(note))
@@ -87,7 +93,7 @@ fun NoteListScreen(
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
+
                 }
             }
         }
@@ -110,7 +116,7 @@ fun HeadingSection(
     ) {
         Text(
             text = stringResource(R.string.text_heading),
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.h4,
             color = MaterialTheme.colors.primary
         )
 
@@ -137,9 +143,9 @@ fun SortSection(
         // Row will render radio buttons with label "Date","Title" and "Color".
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            RadioButton(
+            NoteRadioButton(
                 text = stringResource(R.string.text_title),
                 isSelected = sort is Sort.Title // if sort is of type Title select radio button else unselect it.
             ) {
@@ -147,7 +153,7 @@ fun SortSection(
                 viewModel.onEvent(NoteListEvent.SortList(Sort.Title(sort.order)))
             }
 
-            RadioButton(
+            NoteRadioButton(
                 text = stringResource(R.string.text_date),
                 isSelected = sort is Sort.Date // if sort is of type "Date" select radio button else unselect it.
             ) {
@@ -155,7 +161,7 @@ fun SortSection(
                 viewModel.onEvent(NoteListEvent.SortList(Sort.Date(sort.order)))
             }
 
-            RadioButton(
+            NoteRadioButton(
                 text = stringResource(R.string.text_color),
                 isSelected = sort is Sort.Color // if sort is of type "Color" select radio button else unselect it.
             ) {
@@ -164,25 +170,29 @@ fun SortSection(
             }
         }
 
+        Spacer(modifier = Modifier.height(10.dp))
+        
         // Row will render radio buttons with label "Ascending" and "Descending".
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.Start
         ) {
-            RadioButton(
+            NoteRadioButton(
                 text = stringResource(R.string.text_ascending),
                 isSelected = sort.order is Order.AscendingOrder // if order is of type "Ascending" select radio button else unselect it.
             ) {
                 // Update sort order type to "AscendingOrder".
-                viewModel.onEvent(NoteListEvent.SortList(sort.updateOrder(sort.order)))
+                viewModel.onEvent(NoteListEvent.SortList(sort.updateOrder(Order.AscendingOrder)))
             }
+            
+            Spacer(modifier = Modifier.width(8.dp))
 
-            RadioButton(
+            NoteRadioButton(
                 text = stringResource(R.string.text_descending),
                 isSelected = sort.order is Order.DescendingOrder // if order is of type "Descending" select radio button else unselect it.
             ) {
                 // Update sort order type to "DescendingOrder".
-                viewModel.onEvent(NoteListEvent.SortList(sort.updateOrder(sort.order)))
+                viewModel.onEvent(NoteListEvent.SortList(sort.updateOrder(Order.DescendingOrder)))
             }
 
         }
