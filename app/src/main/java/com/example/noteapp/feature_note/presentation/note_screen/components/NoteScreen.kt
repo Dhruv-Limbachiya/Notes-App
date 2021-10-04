@@ -27,6 +27,7 @@ import com.example.noteapp.feature_note.presentation.note_screen.NoteEvent
 import com.example.noteapp.feature_note.presentation.note_screen.NoteViewModel
 import com.example.noteapp.feature_note.presentation.note_screen.NoteViewModel.UiEvent
 import com.example.noteapp.feature_note.presentation.note_screen.components.Note.NoteTextField
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -54,6 +55,11 @@ fun NoteScreen(
     val uiEvent = viewModel.event
 
     val coroutineScope = rememberCoroutineScope()
+
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setStatusBarColor(Color(viewModel.noteColor.value))
+
 
     LaunchedEffect(key1 = true) {
         // Observe the ui events.

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Note App</string>
+    <string name="app_name">Notes</string>
     <string name="text_heading">Your Notes</string>
     <string name="text_title">Title</string>
     <string name="text_date">Date</string>

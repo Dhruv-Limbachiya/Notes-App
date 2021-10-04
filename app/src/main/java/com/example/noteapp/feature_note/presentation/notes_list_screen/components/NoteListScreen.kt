@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,6 +24,7 @@ import com.example.noteapp.feature_note.domain.util.Sort
 import com.example.noteapp.feature_note.presentation.notes_list_screen.NoteListEvent
 import com.example.noteapp.feature_note.presentation.notes_list_screen.NotesViewModel
 import com.example.noteapp.feature_note.presentation.util.Screen
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
@@ -34,6 +36,8 @@ fun NoteListScreen(
     val noteState = viewModel.noteState.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(MaterialTheme.colors.background)
 
     Scaffold(
         floatingActionButton = {
@@ -66,7 +70,7 @@ fun NoteListScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp , top = 10.dp),
+                    .padding(start = 16.dp, end = 16.dp, top = 10.dp),
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 items(noteState.notes) { note ->

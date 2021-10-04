@@ -87,4 +87,8 @@ dependencies {
 
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:${rootProject.ext.room_version}"
+
+    // Accompanist library
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.19.0"
+
 }
