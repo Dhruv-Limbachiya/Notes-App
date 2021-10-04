@@ -1,5 +1,6 @@
 package com.example.noteapp.feature_note.domain.use_cases
 
+import com.example.noteapp.feature_note.domain.model.Note
 import com.example.noteapp.feature_note.domain.repository.NoteRepository
 
 
@@ -14,7 +15,7 @@ class GetSpecificNote(
      * Override the invoke() operator functionality.
      * Can be call using getNoteObject.invoke(id) or getNoteObject(id) and return a note.
      */
-    suspend operator fun invoke(noteId: Int) {
-        noteRepository.getNoteById(noteId)
+    suspend operator fun invoke(noteId: Int) : Note?{
+      return  noteRepository.getNoteById(noteId)
     }
 }
