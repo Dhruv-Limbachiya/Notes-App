@@ -59,18 +59,18 @@ fun NoteListScreen(
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
-                SortSection(modifier = Modifier.fillMaxWidth(),sort = noteState.sort)
+                SortSection(modifier = Modifier.fillMaxWidth(), sort = noteState.sort)
             }
 
             // List (Notes)
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(start = 16.dp, end = 16.dp , top = 10.dp),
+                contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 items(noteState.notes) { note ->
                     Spacer(modifier = Modifier.height(16.dp))
-
                     NoteItem(
                         note = note,
                         modifier = Modifier
@@ -171,7 +171,7 @@ fun SortSection(
         }
 
         Spacer(modifier = Modifier.height(10.dp))
-        
+
         // Row will render radio buttons with label "Ascending" and "Descending".
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -184,7 +184,7 @@ fun SortSection(
                 // Update sort order type to "AscendingOrder".
                 viewModel.onEvent(NoteListEvent.SortList(sort.updateOrder(Order.AscendingOrder)))
             }
-            
+
             Spacer(modifier = Modifier.width(8.dp))
 
             NoteRadioButton(
