@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.noteapp.ui.theme.*
 import java.lang.Exception
+import java.lang.IllegalArgumentException
 
 /**
  * It represent a single record in Notes Database.
@@ -23,5 +24,5 @@ data class Note(
         val noteColors = listOf(RedOrange, LightGreen, Violet, BabyBlue, RedPink)
     }
 
-    class InvalidNoteException(msg: String) : Exception(msg)
+    class InvalidNoteException(msg: String) : IllegalArgumentException(msg)
 }
