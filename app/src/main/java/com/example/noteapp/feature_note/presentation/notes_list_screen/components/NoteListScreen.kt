@@ -14,11 +14,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.noteapp.R
+import com.example.noteapp.core.TestTag
 import com.example.noteapp.feature_note.domain.util.Order
 import com.example.noteapp.feature_note.domain.util.Sort
 import com.example.noteapp.feature_note.presentation.notes_list_screen.NoteListEvent
@@ -63,7 +65,7 @@ fun NoteListScreen(
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
-                SortSection(modifier = Modifier.fillMaxWidth(), sort = noteState.sort)
+                SortSection(modifier = Modifier.fillMaxWidth().testTag(TestTag.ORDER_SECTION), sort = noteState.sort)
             }
 
             // List (Notes)
