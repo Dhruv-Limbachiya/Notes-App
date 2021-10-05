@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.noteapp.R
 import com.example.noteapp.core.TestTag
+import com.example.noteapp.core.TestTag.NOTE_ITEM
 import com.example.noteapp.feature_note.domain.util.Order
 import com.example.noteapp.feature_note.domain.util.Sort
 import com.example.noteapp.feature_note.presentation.notes_list_screen.NoteListEvent
@@ -85,6 +86,7 @@ fun NoteListScreen(
                                 // Navigate to note screen.
                                 navController.navigate(Screen.ADD_EDIT_NOTE_SCREEN + "?noteId=${note.noteId}&noteColor=${note.color}")
                             }
+                            .testTag(NOTE_ITEM)
                     ) {
                         viewModel.onEvent(NoteListEvent.DeleteNote(note))
                         scope.launch {

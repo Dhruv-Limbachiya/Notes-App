@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.noteapp.core.TestTag.CONTENT_TEXT_FIELD
+import com.example.noteapp.core.TestTag.TITLE_TEXT_FIELD
 import com.example.noteapp.feature_note.domain.model.Note
 import com.example.noteapp.feature_note.presentation.note_screen.NoteEvent
 import com.example.noteapp.feature_note.presentation.note_screen.NoteViewModel
@@ -122,6 +124,7 @@ fun NoteScreen(
                 isHintVisible = noteTitle.isHintVisible,
                 textStyle = MaterialTheme.typography.h5,
                 isSingleLine = true,
+                testTag = TITLE_TEXT_FIELD,
                 onValueChange = { text ->
                     viewModel.onEvent(NoteEvent.ChangeTitle(text))
                 },
@@ -140,6 +143,7 @@ fun NoteScreen(
                 isHintVisible = noteContent.isHintVisible,
                 textStyle = MaterialTheme.typography.body1,
                 isSingleLine = false,
+                testTag = CONTENT_TEXT_FIELD,
                 onValueChange = { text ->
                     viewModel.onEvent(NoteEvent.ChangeContent(text))
                 },

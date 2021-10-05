@@ -10,6 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -29,7 +33,10 @@ fun NoteRadioButton(
             colors = RadioButtonDefaults.colors(
                 selectedColor = MaterialTheme.colors.primary, // White.
                 unselectedColor = MaterialTheme.colors.onBackground // Dark Gray.
-            )
+            ),
+            modifier = Modifier.semantics {
+                contentDescription = text
+            }
         )
         
         Spacer(modifier = Modifier.width(4.dp))
