@@ -93,7 +93,7 @@ class NotesEndToEndTest {
 
         // Check the note with "title-test" or "content-test" is displayed in list.
         composeRule.onNodeWithText("title-test").assertIsDisplayed()
-        composeRule.onNodeWithText("content-test").assertIsDisplayed()
+        composeRule.onNodeWithText("title-content").assertIsDisplayed()
 
         // click on that note.
         composeRule.onNodeWithText("title-test").performClick()
@@ -127,17 +127,17 @@ class NotesEndToEndTest {
 
             // Click on "Save note" FAB
             composeRule.onNodeWithContentDescription("Save note").performClick()
-
-            // Click Sort toggle icon button.
-            composeRule.onNodeWithContentDescription("Sort").performClick()
-
-            // Click "Title" & "Descending" radio button.
-            composeRule.onNodeWithContentDescription("Title").performClick()
-            composeRule.onNodeWithContentDescription("Descending").performClick()
-
-            composeRule.onAllNodesWithTag(NOTE_ITEM)[0].assertTextContains("3")
-            composeRule.onAllNodesWithTag(NOTE_ITEM)[1].assertTextContains("2")
-            composeRule.onAllNodesWithTag(NOTE_ITEM)[2].assertTextContains("1")
         }
+
+        // Click Sort toggle icon button.
+        composeRule.onNodeWithContentDescription("Sort").performClick()
+
+        // Click "Title" & "Descending" radio button.
+        composeRule.onNodeWithContentDescription("Title").performClick()
+        composeRule.onNodeWithContentDescription("Descending").performClick()
+
+        composeRule.onAllNodesWithTag(NOTE_ITEM)[0].assertTextContains("3")
+        composeRule.onAllNodesWithTag(NOTE_ITEM)[1].assertTextContains("2")
+        composeRule.onAllNodesWithTag(NOTE_ITEM)[2].assertTextContains("1")
     }
 }

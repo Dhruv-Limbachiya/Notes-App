@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.NavHost
@@ -61,7 +62,7 @@ class NoteListScreenTest {
         // Make sure it doesn't exist(hide) initially.
         composeRule.onNodeWithTag(TestTag.ORDER_SECTION).assertDoesNotExist()
         // perform click on the toggle icon button.
-        composeRule.onNodeWithTag(TestTag.ORDER_SECTION).performClick()
+        composeRule.onNodeWithContentDescription("Sort").performClick()
         // Maker sure it is displayed after clicking on toggle icon button.
         composeRule.onNodeWithTag(TestTag.ORDER_SECTION).assertIsDisplayed()
     }
