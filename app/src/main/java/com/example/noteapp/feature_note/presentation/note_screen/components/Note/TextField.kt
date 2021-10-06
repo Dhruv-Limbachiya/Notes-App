@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 
 /**
@@ -22,6 +23,7 @@ fun NoteTextField(
     isHintVisible: Boolean = true,
     textStyle: TextStyle,
     isSingleLine: Boolean,
+    testTag: String = "",
     onValueChange: (String) -> Unit,
     onFocusStateChanged: (FocusState) -> Unit
 ) {
@@ -36,6 +38,7 @@ fun NoteTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { onFocusStateChanged(it) }
+                .testTag(testTag)
         )
 
         // Show hint if isHintVisible = true.
